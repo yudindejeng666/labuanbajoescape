@@ -1,0 +1,2118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Labuan Bajo Escape</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ===== FIX DASAR MODAL ===== */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+
+      opacity: 1;
+      visibility: visible;
+
+      transition:
+        opacity .25s ease,
+        visibility .25s ease;
+    }
+
+    .modal.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,.75);
+    }
+
+    .photo-modal-content,
+    .booking-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .menu-toggle {
+      cursor: pointer;
+    }
+
+    .mobile-nav {
+      display: none;
+    }
+
+    .mobile-nav.active {
+      display: flex;
+    }
+
+    @media (max-width: 900px) {
+      .desktop-nav,
+      .header-actions {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .mobile-nav {
+        position: absolute;
+        top: 100%;
+        left: 15px;
+        right: 15px;
+
+        flex-direction: column;
+        gap: 8px;
+
+        padding: 15px;
+
+        background: #102f30;
+        border-radius: 15px;
+
+        box-shadow: 0 20px 50px rgba(0,0,0,.25);
+      }
+
+      .mobile-nav a,
+      .mobile-booking {
+        padding: 13px;
+        color: #f3eddf;
+      }
+    }
+
+    @media (min-width: 901px) {
+      .menu-toggle,
+      .mobile-nav {
+        display: none !important;
+      }
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="grain"></div>
+
+<div class="notice" id="notice"></div>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="site-header">
+
+  <div class="container header-inner">
+
+    <a class="brand" href="#top">
+
+      <span class="brand-mark">L</span>
+
+      <span>
+        <strong>Labuan Bajo</strong>
+        <small>Escape / Flores</small>
+      </span>
+
+    </a>
+
+
+    <nav class="desktop-nav">
+
+      <a href="#destinasi">Jelajah</a>
+      <a href="#rencana">Rencana 3 hari</a>
+      <a href="#rasa">Rasa Flores</a>
+
+    </nav>
+
+
+    <div class="header-actions">
+
+      <button
+        type="button"
+        class="button button-gold button-small"
+        data-open-booking
+      >
+        Pesan trip
+      </button>
+
+      <button
+        type="button"
+        class="button button-outline button-small"
+        data-save-trip
+      >
+        Simpan perjalanan
+      </button>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="menu-toggle"
+      id="menu-toggle"
+      aria-expanded="false"
+      aria-label="Buka menu"
+    >
+      ☰
+    </button>
+
+  </div>
+
+
+  <nav class="mobile-nav" id="mobile-nav">
+
+    <a href="#destinasi">Jelajah pulau</a>
+    <a href="#rencana">Rencana 3 hari</a>
+    <a href="#rasa">Rasa Flores</a>
+    <a href="#catatan">Catatan kecil</a>
+
+    <button
+      type="button"
+      class="mobile-booking"
+      data-open-booking
+    >
+      ◉ &nbsp; Pesan trip
+    </button>
+
+  </nav>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main id="top">
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+  <img
+    src="images/liveaboard.jpg"
+    alt="Kapal kayu di Labuan Bajo"
+  >
+
+  <div class="hero-overlay"></div>
+
+  <div class="container hero-content">
+
+    <p class="eyebrow gold">
+      8°29′S / 119°53′E
+    </p>
+
+    <h1>
+      Pergi lebih<br>
+      <em>jauh.</em> Pulang<br>
+      lebih penuh.
+    </h1>
+
+
+    <div class="hero-bottom">
+
+      <p>
+        Catatan perjalanan untuk menemukan sisi Flores
+        yang tidak masuk brosur. Laut biru, bukit kering,
+        dan waktu yang sengaja dilambatkan.
+      </p>
+
+
+      <div class="hero-buttons">
+
+        <a
+          class="button button-gold"
+          href="#destinasi"
+        >
+          Mulai menjelajah →
+        </a>
+
+
+        <button
+          type="button"
+          class="button button-outline"
+          data-open-booking
+        >
+          ◉ &nbsp; Rencanakan trip
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <a
+    class="scroll-hint"
+    href="#manifesto"
+  >
+    ↓ &nbsp; Gulir untuk membaca
+  </a>
+
+</section>
+
+
+<!-- MANIFESTO -->
+
+<section
+  class="manifesto section"
+  id="manifesto"
+>
+
+  <div class="container split">
+
+    <p class="eyebrow muted">
+      <span class="coral">01</span>
+      &nbsp; Cara kami melihat Flores
+    </p>
+
+
+    <div>
+
+      <p class="display manifesto-lead">
+        Tempat terbaik di Labuan Bajo bukan yang paling ramai.
+        Ia yang membuatmu lupa memeriksa jam.
+      </p>
+
+
+      <div class="two-columns muted-copy">
+
+        <p>
+          Kami mengumpulkan rekomendasi dari pagi-pagi
+          yang terlalu indah untuk dilewatkan, percakapan
+          di atas kapal, dan warung yang masih memasak
+          resep keluarganya.
+        </p>
+
+
+        <p>
+          Datanglah dengan rasa ingin tahu, bukan daftar
+          centang. Pulau-pulau ini punya ritmenya sendiri—
+          ikuti.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- DESTINATIONS -->
+
+<section
+  class="destinations section dark-section"
+  id="destinasi"
+>
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <div>
+
+        <p class="eyebrow gold">
+          02 / Titik-titik yang tinggal
+        </p>
+
+        <h2>
+          Tiga warna<br>
+          <em>laut yang sama.</em>
+        </h2>
+
+      </div>
+
+
+      <p>
+        Tidak perlu mengejar semuanya.
+        Pilih satu yang membuat dada terasa sedikit lebih lapang.
+      </p>
+
+    </div>
+
+
+    <div class="destination-grid">
+
+
+      <!-- PADAR -->
+
+      <article class="destination-card">
+
+        <button
+          type="button"
+          class="photo-button"
+          data-photo="padar"
+        >
+
+          <span class="photo-wrap">
+
+            <img
+              src="images/padar-sunrise.jpg"
+              alt="Padar Island"
+              loading="lazy"
+            >
+
+            <span class="photo-label">
+              Lihat foto
+            </span>
+
+          </span>
+
+        </button>
+
+
+        <p class="eyebrow gold">
+          Bangun sebelum matahari
+        </p>
+
+        <h3>
+          Padar Island <span>↗</span>
+        </h3>
+
+        <p class="card-copy">
+          Tiga teluk, satu punggung bukit,
+          dan cahaya yang mengubah semuanya.
+          Naik pelan-pelan.
+        </p>
+
+        <p class="meta">
+          ⌖ &nbsp; 15 menit dari dermaga
+        </p>
+
+      </article>
+
+
+      <!-- PINK -->
+
+      <article class="destination-card offset-card">
+
+        <button
+          type="button"
+          class="photo-button"
+          data-photo="pink"
+        >
+
+          <span class="photo-wrap">
+
+            <img
+              src="images/pink-beach.jpg"
+              alt="Pink Beach"
+              loading="lazy"
+            >
+
+            <span class="photo-label">
+              Lihat foto
+            </span>
+
+          </span>
+
+        </button>
+
+
+        <p class="eyebrow gold">
+          Pasir yang memerah
+        </p>
+
+        <h3>
+          Pink Beach <span>↗</span>
+        </h3>
+
+        <p class="card-copy">
+          Sejumput serpihan karang merah muda
+          memberi warna pada teluk kecil
+          yang nyaris rahasia.
+        </p>
+
+        <p class="meta">
+          ⌖ &nbsp; 45 menit berlayar
+        </p>
+
+      </article>
+
+
+      <!-- MANTA -->
+
+      <article class="destination-card">
+
+        <button
+          type="button"
+          class="photo-button"
+          data-photo="manta"
+        >
+
+          <span class="photo-wrap">
+
+            <img
+              src="images/manta-point.jpg"
+              alt="Manta Point"
+              loading="lazy"
+            >
+
+            <span class="photo-label">
+              Lihat foto
+            </span>
+
+          </span>
+
+        </button>
+
+
+        <p class="eyebrow gold">
+          Bertemu arus
+        </p>
+
+        <h3>
+          Manta Point <span>↗</span>
+        </h3>
+
+        <p class="card-copy">
+          Di arus yang hangat, manta menari
+          tanpa suara. Ikuti panduan lokal,
+          beri jarak.
+        </p>
+
+        <p class="meta">
+          ⌖ &nbsp; Musim terbaik: Mei–Oktober
+        </p>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- RASA -->
+
+<section
+  class="flavors section gold-section"
+  id="rasa"
+>
+
+  <div class="container split">
+
+    <div>
+
+      <p class="eyebrow dark-eyebrow">
+        03 / Jangan hanya lihat
+      </p>
+
+      <h2>
+        Ada rasa<br>
+        di balik<br>
+        <em>pemandangan.</em>
+      </h2>
+
+      <p class="section-intro">
+        Flores terasa paling dekat di meja makan.
+        Coba pelan-pelan: satu suap, satu cerita.
+      </p>
+
+    </div>
+
+
+    <div class="flavor-list">
+
+
+      <article>
+
+        <span>01</span>
+
+        <div>
+          <h3>Ikan kuah asam</h3>
+
+          <p>
+            Asam segar, kemangi,
+            dan hasil tangkapan pagi.
+          </p>
+        </div>
+
+        <b>⌁</b>
+
+      </article>
+
+
+      <article>
+
+        <span>02</span>
+
+        <div>
+          <h3>Kopi Bajawa</h3>
+
+          <p>
+            Aroma cokelat dan tanah vulkanis
+            dalam satu cangkir.
+          </p>
+        </div>
+
+        <b>◒</b>
+
+      </article>
+
+
+      <article>
+
+        <span>03</span>
+
+        <div>
+          <h3>Jagung bose</h3>
+
+          <p>
+            Jagung tumbuk, kacang,
+            dan santan—hangat seperti rumah.
+          </p>
+        </div>
+
+        <b>✦</b>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ITINERARY -->
+
+<section
+  class="itinerary section"
+  id="rencana"
+>
+
+  <div class="container split">
+
+    <div>
+
+      <p class="eyebrow coral-eyebrow">
+        04 / Rencana yang lentur
+      </p>
+
+      <h2>
+        Tiga hari,<br>
+        <em>tanpa terburu.</em>
+      </h2>
+
+      <p class="section-intro muted-copy">
+        Contoh alur untuk perjalanan pertama.
+        Tukar harinya, hilangkan yang tidak cocok,
+        sisakan ruang untuk kejutan.
+      </p>
+
+    </div>
+
+
+    <div>
+
+      <div class="tabs">
+
+        <button
+          type="button"
+          class="tab active"
+          data-itinerary="santai"
+        >
+          Santai & lengkap
+        </button>
+
+        <button
+          type="button"
+          class="tab"
+          data-itinerary="laut"
+        >
+          Tidur di kapal
+        </button>
+
+        <button
+          type="button"
+          class="tab"
+          data-itinerary="rasa"
+        >
+          Berburu rasa
+        </button>
+
+      </div>
+
+
+      <div
+        class="itinerary-list"
+        id="itinerary-list"
+      ></div>
+
+
+      <button
+        type="button"
+        class="text-button"
+        data-save-itinerary
+      >
+        Simpan rencana ini →
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- LIVEABOARD -->
+
+<section class="liveaboard section dark-section">
+
+  <div class="container split">
+
+    <div>
+
+      <p class="eyebrow gold">
+        05 / Di atas air
+      </p>
+
+      <h2>
+        Kapal adalah<br>
+        <em>cara lain</em> untuk<br>
+        melihat waktu.
+      </h2>
+
+    </div>
+
+
+    <div>
+
+      <p class="large-copy">
+        Ketika malam datang di antara pulau,
+        tidak ada notifikasi. Hanya bunyi air
+        di lambung kapal, bintang yang lebih banyak
+        dari perkiraan, dan makan malam yang terasa
+        seperti upacara kecil.
+      </p>
+
+
+      <div class="stats">
+
+        <div>
+
+          <strong>⌁</strong>
+
+          <p>
+            2–3 malam<br>
+            di geladak
+          </p>
+
+        </div>
+
+
+        <div>
+
+          <strong>≋</strong>
+
+          <p>
+            Snorkel saat<br>
+            air paling tenang
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CATATAN -->
+
+<section
+  class="notes section"
+  id="catatan"
+>
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <div>
+
+        <p class="eyebrow coral-eyebrow">
+          06 / Catatan lapangan
+        </p>
+
+        <h2>
+          Sebelum berangkat.
+        </h2>
+
+      </div>
+
+
+      <p>
+        Hal-hal kecil yang membuat perjalanan
+        terasa lebih baik untuk diri sendiri
+        dan pulaunya.
+      </p>
+
+    </div>
+
+
+    <div class="notes-grid">
+
+
+      <article>
+
+        <p class="eyebrow coral-eyebrow">
+          Waktu terbaik
+        </p>
+
+        <h3>April–November</h3>
+
+        <p>
+          Laut lebih bersahabat;
+          Juli–Agustus paling ramai.
+        </p>
+
+      </article>
+
+
+      <article>
+
+        <p class="eyebrow coral-eyebrow">
+          Yang dibawa
+        </p>
+
+        <h3>Air minum & topi</h3>
+
+        <p>
+          Pulau kering. Isi ulang,
+          jangan tambah sampah.
+        </p>
+
+      </article>
+
+
+      <article>
+
+        <p class="eyebrow coral-eyebrow">
+          Etika laut
+        </p>
+
+        <h3>Jaga jarak</h3>
+
+        <p>
+          Manta dan karang tidak butuh
+          disentuh untuk diingat.
+        </p>
+
+      </article>
+
+
+      <article>
+
+        <p class="eyebrow coral-eyebrow">
+          Cara tiba
+        </p>
+
+        <h3>Bandara Komodo</h3>
+
+        <p>
+          Penerbangan langsung dari Bali
+          tersedia setiap hari.
+        </p>
+
+      </article>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer dark-section">
+
+  <div class="container footer-grid">
+
+
+    <div>
+
+      <a class="brand" href="#top">
+
+        <span class="brand-mark">L</span>
+
+        <span>
+          <strong>Labuan Bajo</strong>
+          <small>Escape / Flores</small>
+        </span>
+
+      </a>
+
+      <p>
+        Panduan kecil untuk pulau-pulau besar
+        dalam ingatan.
+      </p>
+
+    </div>
+
+
+    <div>
+
+      <p class="eyebrow gold">
+        Jelajah lebih jauh
+      </p>
+
+      <a href="#destinasi">
+        Destinasi pilihan
+      </a>
+
+      <a href="#rencana">
+        Rencana perjalanan
+      </a>
+
+      <a href="#catatan">
+        Catatan lapangan
+      </a>
+
+    </div>
+
+
+    <div>
+
+      <p class="eyebrow gold">
+        Bagikan catatan
+      </p>
+
+      <button
+        type="button"
+        class="share-button"
+        data-share
+      >
+        ↗ &nbsp; Kirim ke teman
+      </button>
+
+      <p class="social">
+        ◎ &nbsp; @labuanbajoescape
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="container footer-bottom">
+
+    <span>
+      Flores, Indonesia · 2026
+    </span>
+
+    <span>
+      Jalan pelan, lihat lebih banyak.
+    </span>
+
+  </div>
+
+</footer>
+
+
+<!-- ================= PHOTO MODAL ================= -->
+
+<div
+  class="modal hidden"
+  id="photo-modal"
+>
+
+  <div
+    class="modal-backdrop"
+    data-close-photo
+  ></div>
+
+
+  <div class="photo-modal-content">
+
+    <button
+      type="button"
+      class="close-button"
+      data-close-photo
+    >
+      ×
+    </button>
+
+
+    <img
+      id="modal-image"
+      src=""
+      alt=""
+    >
+
+
+    <div>
+
+      <p
+        class="eyebrow gold"
+        id="modal-subtitle"
+      ></p>
+
+      <h3 id="modal-title"></h3>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= BOOKING MODAL ================= -->
+
+<div
+  class="modal hidden"
+  id="booking-modal"
+>
+
+  <div
+    class="modal-backdrop"
+    data-close-booking
+  ></div>
+
+
+  <div class="booking-content">
+
+    <button
+      type="button"
+      class="close-button"
+      data-close-booking
+    >
+      ×
+    </button>
+
+
+    <p class="eyebrow coral-eyebrow">
+      Permintaan perjalanan
+    </p>
+
+
+    <h2>
+      Mulai dari tanggal yang kamu mau.
+    </h2>
+
+
+    <p class="muted-copy">
+      Ceritakan sedikit tentang rencanamu.
+      Setelah dikirim, WhatsApp akan terbuka
+      dengan pesan yang sudah terisi.
+    </p>
+
+
+    <form id="booking-form">
+
+
+      <div class="form-grid">
+
+        <label>
+          Tanggal perjalanan
+
+          <input
+            type="date"
+            name="tripDate"
+            required
+          >
+        </label>
+
+
+        <label>
+          Jumlah orang
+
+          <input
+            type="number"
+            name="travelers"
+            min="1"
+            max="50"
+            value="2"
+            required
+          >
+        </label>
+
+      </div>
+
+
+      <fieldset>
+
+        <legend>
+          Tipe perjalanan
+        </legend>
+
+
+        <div class="trip-types">
+
+
+          <label>
+
+            <input
+              type="radio"
+              name="tripType"
+              value="laut"
+              checked
+            >
+
+            <span>
+              <b>Tidur di kapal</b>
+              <small>Malam di geladak kapal</small>
+            </span>
+
+          </label>
+
+
+          <label>
+
+            <input
+              type="radio"
+              name="tripType"
+              value="santai"
+            >
+
+            <span>
+              <b>Santai & lengkap</b>
+              <small>Pulau pilihan tanpa terburu</small>
+            </span>
+
+          </label>
+
+
+          <label>
+
+            <input
+              type="radio"
+              name="tripType"
+              value="rasa"
+            >
+
+            <span>
+              <b>Berburu rasa</b>
+              <small>Kuliner dan cerita lokal</small>
+            </span>
+
+          </label>
+
+
+        </div>
+
+      </fieldset>
+
+
+      <div class="form-grid">
+
+        <label>
+          Nama lengkap
+
+          <input
+            type="text"
+            name="fullName"
+            placeholder="Nama kamu"
+            required
+          >
+        </label>
+
+
+        <label>
+          Nomor WhatsApp
+
+          <input
+            type="tel"
+            name="phone"
+            placeholder="+62 ..."
+            required
+          >
+        </label>
+
+      </div>
+
+
+      <label>
+        Email
+
+        <input
+          type="email"
+          name="email"
+          placeholder="nama@email.com"
+          required
+        >
+      </label>
+
+
+      <label>
+        Catatan tambahan
+
+        <textarea
+          name="notes"
+          rows="4"
+          placeholder="Misalnya ingin melihat manta atau punya kebutuhan khusus."
+        ></textarea>
+
+      </label>
+
+
+      <div class="form-footer">
+
+        <p>
+          Data ini hanya digunakan untuk
+          menindaklanjuti rencana perjalanan.
+        </p>
+
+
+        <button
+          type="submit"
+          class="button button-teal"
+        >
+          Lanjut ke WhatsApp →
+        </button>
+
+      </div>
+
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+     TIDAK PERLU script.js LAGI
+===================================================== -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  "use strict";
+
+
+  /* ======================================
+     KONFIGURASI
+  ====================================== */
+
+  const PHONE = "6281236700164";
+
+
+  /* ======================================
+     DATA FOTO
+  ====================================== */
+
+  const photos = {
+
+    padar: {
+      title: "Padar Island",
+      subtitle: "Bangun sebelum matahari",
+      src: "images/padar-sunrise.jpg"
+    },
+
+    pink: {
+      title: "Pink Beach",
+      subtitle: "Pasir yang memerah",
+      src: "images/pink-beach.jpg"
+    },
+
+    manta: {
+      title: "Manta Point",
+      subtitle: "Bertemu arus",
+      src: "images/manta-point.jpg"
+    }
+
+  };
+
+
+  /* ======================================
+     DATA ITINERARY
+  ====================================== */
+
+  const itineraries = {
+
+    santai: [
+
+      [
+        "Hari 01",
+        "Pelabuhan & senja",
+        "Tiba di Labuan Bajo, makan malam ikan bakar di tepi laut, lalu berjalan tanpa rencana di gang-gang kota."
+      ],
+
+      [
+        "Hari 02",
+        "Padar & pink",
+        "Mengejar matahari terbit di Padar, berenang di Pink Beach, dan menikmati sore dari geladak kapal."
+      ],
+
+      [
+        "Hari 03",
+        "Kota yang ditinggal pelan",
+        "Kopi Flores, oleh-oleh yang dipilih baik-baik, lalu satu pandangan terakhir ke bukit-bukit kering."
+      ]
+
+    ],
+
+
+    laut: [
+
+      [
+        "Hari 01",
+        "Naik kapal",
+        "Berlayar dari pagi. Pulau Kelor untuk snorkel pertama, makan siang di laut, bermalam di bawah langit yang luas."
+      ],
+
+      [
+        "Hari 02",
+        "Arus & karang",
+        "Manta Point, Pink Beach, lalu makan malam di geladak saat gugus pulau berubah menjadi siluet."
+      ],
+
+      [
+        "Hari 03",
+        "Padar perlahan",
+        "Tiba sebelum fajar, mendaki Padar, berenang sekali lagi, dan kembali ke Labuan Bajo dengan asin di rambut."
+      ]
+
+    ],
+
+
+    rasa: [
+
+      [
+        "Hari 01",
+        "Pasar malam",
+        "Cicipi jagung bose, ikan kuah asam, dan pisang goreng di pasar malam Wae Kesambi bersama pemandu lokal."
+      ],
+
+      [
+        "Hari 02",
+        "Dapur Flores",
+        "Belajar menumbuk sambal, mencicipi kopi Bajawa, dan makan siang sederhana di rumah keluarga pesisir."
+      ],
+
+      [
+        "Hari 03",
+        "Bekal pulang",
+        "Pilih madu hutan, rempah, dan biji kopi dari penjual yang mengenal asal setiap produknya."
+      ]
+
+    ]
+
+  };
+
+
+  /* ======================================
+     ELEMENT
+  ====================================== */
+
+  const menuToggle =
+    document.getElementById("menu-toggle");
+
+  const mobileNav =
+    document.getElementById("mobile-nav");
+
+  const photoModal =
+    document.getElementById("photo-modal");
+
+  const bookingModal =
+    document.getElementById("booking-modal");
+
+  const modalImage =
+    document.getElementById("modal-image");
+
+  const modalTitle =
+    document.getElementById("modal-title");
+
+  const modalSubtitle =
+    document.getElementById("modal-subtitle");
+
+  const bookingForm =
+    document.getElementById("booking-form");
+
+  const itineraryList =
+    document.getElementById("itinerary-list");
+
+  const notice =
+    document.getElementById("notice");
+
+
+  /* ======================================
+     NOTICE
+  ====================================== */
+
+  function showNotice(text) {
+
+    if (!notice) return;
+
+    notice.textContent = text;
+
+    notice.classList.add("show");
+
+    setTimeout(function () {
+      notice.classList.remove("show");
+    }, 2500);
+
+  }
+
+
+  /* ======================================
+     MOBILE MENU
+  ====================================== */
+
+  if (menuToggle && mobileNav) {
+
+    menuToggle.addEventListener("click", function (event) {
+
+      event.stopPropagation();
+
+      const open =
+        mobileNav.classList.contains("active");
+
+      if (open) {
+
+        mobileNav.classList.remove("active");
+
+        menuToggle.textContent = "☰";
+
+        menuToggle.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+
+      } else {
+
+        mobileNav.classList.add("active");
+
+        menuToggle.textContent = "×";
+
+        menuToggle.setAttribute(
+          "aria-expanded",
+          "true"
+        );
+
+      }
+
+    });
+
+
+    mobileNav
+      .querySelectorAll("a")
+      .forEach(function (link) {
+
+        link.addEventListener(
+          "click",
+          function () {
+
+            mobileNav.classList.remove(
+              "active"
+            );
+
+            menuToggle.textContent = "☰";
+
+            menuToggle.setAttribute(
+              "aria-expanded",
+              "false"
+            );
+
+          }
+        );
+
+      });
+
+  }
+
+
+  document.addEventListener(
+    "click",
+    function (event) {
+
+      if (!mobileNav || !menuToggle) {
+        return;
+      }
+
+      if (
+        !mobileNav.classList.contains(
+          "active"
+        )
+      ) {
+        return;
+      }
+
+      if (
+        mobileNav.contains(event.target) ||
+        menuToggle.contains(event.target)
+      ) {
+        return;
+      }
+
+      mobileNav.classList.remove("active");
+
+      menuToggle.textContent = "☰";
+
+      menuToggle.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+    }
+  );
+
+
+  /* ======================================
+     PHOTO MODAL
+  ====================================== */
+
+  document
+    .querySelectorAll("[data-photo]")
+    .forEach(function (button) {
+
+      button.addEventListener(
+        "click",
+        function () {
+
+          const key =
+            button.getAttribute("data-photo");
+
+          const photo =
+            photos[key];
+
+          if (!photo) return;
+
+
+          modalImage.src =
+            photo.src;
+
+          modalImage.alt =
+            photo.title;
+
+          modalTitle.textContent =
+            photo.title;
+
+          modalSubtitle.textContent =
+            photo.subtitle;
+
+
+          photoModal.classList.remove(
+            "hidden"
+          );
+
+          document.body.classList.add(
+            "modal-open"
+          );
+
+        }
+      );
+
+    });
+
+
+  function closePhoto() {
+
+    if (!photoModal) return;
+
+    photoModal.classList.add("hidden");
+
+    document.body.classList.remove(
+      "modal-open"
+    );
+
+  }
+
+
+  document
+    .querySelectorAll("[data-close-photo]")
+    .forEach(function (button) {
+
+      button.addEventListener(
+        "click",
+        closePhoto
+      );
+
+    });
+
+
+  /* ======================================
+     BOOKING MODAL
+  ====================================== */
+
+  function openBooking() {
+
+    if (!bookingModal) return;
+
+    bookingModal.classList.remove(
+      "hidden"
+    );
+
+    document.body.classList.add(
+      "modal-open"
+    );
+
+
+    const dateInput =
+      document.querySelector(
+        '[name="tripDate"]'
+      );
+
+
+    if (dateInput) {
+
+      const today =
+        new Date();
+
+      const yyyy =
+        today.getFullYear();
+
+      const mm =
+        String(
+          today.getMonth() + 1
+        ).padStart(2, "0");
+
+      const dd =
+        String(
+          today.getDate()
+        ).padStart(2, "0");
+
+
+      dateInput.min =
+        yyyy + "-" + mm + "-" + dd;
+
+    }
+
+  }
+
+
+  function closeBooking() {
+
+    if (!bookingModal) return;
+
+    bookingModal.classList.add(
+      "hidden"
+    );
+
+    document.body.classList.remove(
+      "modal-open"
+    );
+
+  }
+
+
+  document
+    .querySelectorAll("[data-open-booking]")
+    .forEach(function (button) {
+
+      button.addEventListener(
+        "click",
+        function (event) {
+
+          event.preventDefault();
+
+          openBooking();
+
+        }
+      );
+
+    });
+
+
+  document
+    .querySelectorAll("[data-close-booking]")
+    .forEach(function (button) {
+
+      button.addEventListener(
+        "click",
+        closeBooking
+      );
+
+    });
+
+
+  /* ======================================
+     BOOKING → WHATSAPP
+  ====================================== */
+
+  if (bookingForm) {
+
+    bookingForm.addEventListener(
+      "submit",
+      function (event) {
+
+        event.preventDefault();
+
+
+        const formData =
+          new FormData(bookingForm);
+
+
+        const tripDate =
+          formData.get("tripDate");
+
+        const travelers =
+          formData.get("travelers");
+
+        const tripType =
+          formData.get("tripType");
+
+        const fullName =
+          formData.get("fullName");
+
+        const phone =
+          formData.get("phone");
+
+        const email =
+          formData.get("email");
+
+        const notes =
+          formData.get("notes");
+
+
+        let tripName =
+          "Tidur di kapal";
+
+
+        if (tripType === "santai") {
+          tripName =
+            "Santai & lengkap";
+        }
+
+
+        if (tripType === "rasa") {
+          tripName =
+            "Berburu rasa";
+        }
+
+
+        const message =
+`Halo Labuan Bajo Escape 👋
+
+Saya ingin merencanakan perjalanan.
+
+Nama: ${fullName}
+Tanggal: ${tripDate}
+Jumlah orang: ${travelers}
+Tipe: ${tripName}
+WhatsApp: ${phone}
+Email: ${email}
+
+Catatan:
+${notes || "-"}
+
+Mohon informasi mengenai ketersediaan dan detail trip. Terima kasih.`;
+
+
+        const whatsappURL =
+          "https://wa.me/" +
+          PHONE +
+          "?text=" +
+          encodeURIComponent(message);
+
+
+        window.location.href =
+          whatsappURL;
+
+      }
+    );
+
+  }
+
+
+  /* ======================================
+     ITINERARY
+  ====================================== */
+
+  function renderItinerary(type) {
+
+    if (!itineraryList) return;
+
+    const data =
+      itineraries[type];
+
+    if (!data) return;
+
+
+    itineraryList.innerHTML = "";
+
+
+    data.forEach(function (item) {
+
+      const article =
+        document.createElement("article");
+
+      article.className =
+        "itinerary-item";
+
+
+      article.innerHTML = `
+
+        <div class="itinerary-day">
+          ${item[0]}
+        </div>
+
+        <div class="itinerary-content">
+
+          <h3>
+            ${item[1]}
+          </h3>
+
+          <p>
+            ${item[2]}
+          </p>
+
+        </div>
+
+      `;
+
+
+      itineraryList.appendChild(
+        article
+      );
+
+    });
+
+  }
+
+
+  renderItinerary("santai");
+
+
+  document
+    .querySelectorAll("[data-itinerary]")
+    .forEach(function (button) {
+
+      button.addEventListener(
+        "click",
+        function () {
+
+          const type =
+            button.getAttribute(
+              "data-itinerary"
+            );
+
+
+          document
+            .querySelectorAll(
+              "[data-itinerary]"
+            )
+            .forEach(function (item) {
+
+              item.classList.remove(
+                "active"
+              );
+
+            });
+
+
+          button.classList.add(
+            "active"
+          );
+
+
+          renderItinerary(type);
+
+        }
+      );
+
+    });
+
+
+  /* ======================================
+     SAVE TRIP
+  ====================================== */
+
+  const saveTrip =
+    document.querySelector(
+      "[data-save-trip]"
+    );
+
+
+  if (saveTrip) {
+
+    saveTrip.addEventListener(
+      "click",
+      function () {
+
+        localStorage.setItem(
+          "labuanBajoTripSaved",
+          "true"
+        );
+
+        showNotice(
+          "Perjalanan berhasil disimpan ✓"
+        );
+
+      }
+    );
+
+  }
+
+
+  /* ======================================
+     SAVE ITINERARY
+  ====================================== */
+
+  const saveItinerary =
+    document.querySelector(
+      "[data-save-itinerary]"
+    );
+
+
+  if (saveItinerary) {
+
+    saveItinerary.addEventListener(
+      "click",
+      function () {
+
+        const active =
+          document.querySelector(
+            ".tab.active"
+          );
+
+
+        const type =
+          active
+            ? active.getAttribute(
+                "data-itinerary"
+              )
+            : "santai";
+
+
+        localStorage.setItem(
+          "labuanBajoItinerary",
+          type
+        );
+
+
+        showNotice(
+          "Rencana berhasil disimpan ✓"
+        );
+
+      }
+    );
+
+  }
+
+
+  /* ======================================
+     SHARE
+  ====================================== */
+
+  const shareButton =
+    document.querySelector(
+      "[data-share]"
+    );
+
+
+  if (shareButton) {
+
+    shareButton.addEventListener(
+      "click",
+      async function () {
+
+        const url =
+          window.location.href;
+
+
+        if (
+          navigator.share
+        ) {
+
+          try {
+
+            await navigator.share({
+              title:
+                "Labuan Bajo Escape",
+
+              text:
+                "Temukan sisi Flores yang tidak masuk brosur.",
+
+              url: url
+
+            });
+
+          } catch (error) {
+
+            if (
+              error.name !==
+              "AbortError"
+            ) {
+
+              console.log(error);
+
+            }
+
+          }
+
+        } else {
+
+          try {
+
+            await navigator.clipboard.writeText(
+              url
+            );
+
+            showNotice(
+              "Link berhasil disalin ✓"
+            );
+
+          } catch (error) {
+
+            showNotice(
+              "Link: " + url
+            );
+
+          }
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /* ======================================
+     SMOOTH SCROLL
+  ====================================== */
+
+  document
+    .querySelectorAll(
+      'a[href^="#"]'
+    )
+    .forEach(function (link) {
+
+      link.addEventListener(
+        "click",
+        function (event) {
+
+          const id =
+            link.getAttribute("href");
+
+
+          if (
+            !id ||
+            id === "#"
+          ) {
+            return;
+          }
+
+
+          const target =
+            document.querySelector(id);
+
+
+          if (!target) return;
+
+
+          event.preventDefault();
+
+
+          const header =
+            document.querySelector(
+              ".site-header"
+            );
+
+
+          const offset =
+            header
+              ? header.offsetHeight
+              : 0;
+
+
+          const position =
+            target.getBoundingClientRect().top +
+            window.scrollY -
+            offset;
+
+
+          window.scrollTo({
+
+            top: position,
+
+            behavior: "smooth"
+
+          });
+
+        }
+      );
+
+    });
+
+
+  /* ======================================
+     ESC
+  ====================================== */
+
+  document.addEventListener(
+    "keydown",
+    function (event) {
+
+      if (
+        event.key !== "Escape"
+      ) {
+        return;
+      }
+
+
+      closePhoto();
+
+      closeBooking();
+
+
+      if (mobileNav) {
+
+        mobileNav.classList.remove(
+          "active"
+        );
+
+      }
+
+
+      if (menuToggle) {
+
+        menuToggle.textContent =
+          "☰";
+
+        menuToggle.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+
+      }
+
+    }
+  );
+
+
+  /* ======================================
+     DEBUG
+  ====================================== */
+
+  console.log(
+    "Labuan Bajo Escape berhasil dimuat."
+  );
+
+});
+
+</script>
+
+</body>
+</html>
